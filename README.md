@@ -1,5 +1,7 @@
 # MFR-303
 
+[![Build](https://github.com/music-for-robots/MFR-303/actions/workflows/build.yml/badge.svg)](https://github.com/music-for-robots/MFR-303/actions/workflows/build.yml)
+
 A free, open-source acid bass synthesizer in the spirit of the classic 303, by [Music For Robots](https://musicforrobots.com).
 
 MFR-303 is a monophonic bass-line synth. It has a resonant diode-ladder style filter, the accent and slide behaviour that makes acid lines squelch, and a built-in 16-step sequencer that syncs to your DAW.
@@ -39,6 +41,16 @@ The built plugin ends up in `build/Squelch_artefacts/Release/VST3/`. ("Squelch" 
 
 `SquelchTest` is a small offline tool that checks the filter calibration and renders a demo WAV. It doesn't need JUCE.
 
+To package it locally, run `scripts/package.ps1`. It needs [Inno Setup 6](https://jrsoftware.org/isinfo.php) and writes a zip and an installer to `dist/`.
+
+## Releasing
+
+1. Bump `VERSION` in `project(...)` in `CMakeLists.txt`.
+2. Add a section for the new version to `CHANGELOG.md`.
+3. Commit, then tag and push, e.g. `git tag v1.0.1 && git push origin v1.0.1`.
+
+GitHub Actions then builds the plugin, runs the DSP test and [pluginval](https://github.com/Tracktion/pluginval) (strictness 10), and publishes a GitHub Release with the zip and the installer.
+
 ## Source layout
 
 | Path | What's in it |
@@ -47,6 +59,8 @@ The built plugin ends up in `build/Squelch_artefacts/Release/VST3/`. ("Squelch" 
 | `Source/PluginProcessor.*` | Parameters, MIDI and sequencer handling, state save/load |
 | `Source/PluginEditor.*` | User interface |
 | `tools/SquelchTest.cpp` | Offline DSP test |
+| `installer/`, `scripts/package.ps1` | Installer script and packaging |
+| `.github/workflows/build.yml` | CI build, validation and releases |
 
 ## License
 

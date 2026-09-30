@@ -7,3 +7,6 @@ out/
 
 # Rendered test audio
 *.wav
+
+# Packaged releases
+dist/
